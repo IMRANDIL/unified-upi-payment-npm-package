@@ -1,5 +1,9 @@
 // src/providers/payu.provider.ts
 
+import { ProviderError } from "../errors";
+import { CreateOrderParams, OrderResponse, PaymentVerification } from "../types";
+import { BaseProvider } from "./base.provider";
+
 export class PayUProvider extends BaseProvider {
   private baseUrl: string;
   

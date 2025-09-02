@@ -1,5 +1,9 @@
 // src/providers/paytm.provider.ts
 
+import { ProviderError } from "../errors";
+import { CreateOrderParams, OrderResponse } from "../types";
+import { BaseProvider } from "./base.provider";
+
 export class PaytmProvider extends BaseProvider {
   private baseUrl: string;
   

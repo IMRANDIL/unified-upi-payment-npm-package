@@ -1,5 +1,9 @@
 // src/providers/googlepay.provider.ts
 
+import { ProviderError } from "../errors";
+import { CreateOrderParams, OrderResponse, PaymentVerification } from "../types";
+import { BaseProvider } from "./base.provider";
+
 export class GooglePayProvider extends BaseProvider {
   async createOrder(params: CreateOrderParams): Promise<OrderResponse> {
     // Google Pay uses UPI deep links directly

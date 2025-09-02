@@ -1,3 +1,4 @@
+// src/utils/qrcode.ts
 import QRCode from 'qrcode';
 
 export interface QRCodeOptions {
@@ -9,50 +10,64 @@ export interface QRCodeOptions {
   };
 }
 
+/**
+ * Generate a data URL (base64 PNG) for the given data.
+ */
 export async function generateQRCode(
   data: string,
   options: QRCodeOptions = {}
 ): Promise<string> {
-  try {
-    const qrOptions = {
-      errorCorrectionLevel: 'M' as const,
-      type: 'image/png' as const,
-      quality: 0.92,
-      margin: options.margin || 1,
-      color: {
-        dark: options.color?.dark || '#000000',
-        light: options.color?.light || '#FFFFFF',
-      },
-      width: options.size || 256,
-    };
+  const qrOptions = {
+    // use 'png' per qrcode typings (not 'image/png')
+    errorCorrectionLevel: 'M' as const,
+    type: 'png' as const,
+    // `quality` is only relevant for JPEG but harmless here
+    quality: 0.92,
+    margin: options.margin ?? 1,
+    color: {
+      dark: options.color?.dark ?? '#000000',
+      light: options.color?.light ?? '#FFFFFF',
+    },
+    width: options.size ?? 256,
+  };
 
-    const qrCodeDataURL = await QRCode.toDataURL(data, qrOptions);
-    return qrCodeDataURL;
-  } catch (error: any) {
-    throw new Error(`Failed to generate QR code: ${error.message}`);
-  }
+  // Wrap callback overload in a Promise to avoid TS choosing the void overload
+  return new Promise<string>((resolve, reject) => {
+    // toDataURL supports callback form (err, url) and Promise form depending on lib version/typing
+    // using callback ensures deterministic typing
+    (QRCode as any).toDataURL(data, qrOptions, (err: any, url: string | undefined) => {
+      if (err) return reject(err);
+      if (!url) return reject(new Error('Failed to generate QR Data URL'));
+      resolve(url);
+    });
+  });
 }
 
+/**
+ * Generate a PNG buffer for the given data.
+ */
 export async function generateQRCodeBuffer(
   data: string,
   options: QRCodeOptions = {}
 ): Promise<Buffer> {
-  try {
-    const qrOptions = {
-      errorCorrectionLevel: 'M' as const,
-      type: 'image/png' as const,
-      quality: 0.92,
-      margin: options.margin || 1,
-      color: {
-        dark: options.color?.dark || '#000000',
-        light: options.color?.light || '#FFFFFF',
-      },
-      width: options.size || 256,
-    };
+  const qrOptions = {
+    errorCorrectionLevel: 'M' as const,
+    type: 'png' as const,
+    quality: 0.92,
+    margin: options.margin ?? 1,
+    color: {
+      dark: options.color?.dark ?? '#000000',
+      light: options.color?.light ?? '#FFFFFF',
+    },
+    width: options.size ?? 256,
+  };
 
-    const buffer = await QRCode.toBuffer(data, qrOptions);
-    return buffer;
-  } catch (error: any) {
-    throw new Error(`Failed to generate QR code buffer: ${error.message}`);
-  }
+  // Wrap callback API to guarantee Promise<Buffer>
+  return new Promise<Buffer>((resolve, reject) => {
+    (QRCode as any).toBuffer(data, qrOptions, (err: any, buffer: Buffer | undefined) => {
+      if (err) return reject(err);
+      if (!buffer) return reject(new Error('Failed to generate QR Buffer'));
+      resolve(buffer);
+    });
+  });
 }

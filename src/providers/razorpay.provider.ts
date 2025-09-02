@@ -1,5 +1,7 @@
 // src/providers/razorpay.provider.ts
 
+import { ProviderError } from '../errors';
+import { CreateOrderParams, OrderResponse, PaymentVerification } from '../types';
 import { BaseProvider } from './base.provider';
 import * as crypto from 'crypto';
 

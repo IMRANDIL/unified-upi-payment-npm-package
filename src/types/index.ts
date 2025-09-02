@@ -1,3 +1,5 @@
+import { Logger } from "../utils";
+
 export type ProviderName = 'razorpay' | 'cashfree' | 'phonepe' | 'paytm' | 'googlepay' | 'bharatpe' | 'payu';
 
 export interface ProviderCredentials {
@@ -39,7 +41,7 @@ export interface UPIConfig {
   options?: {
     timeout?: number;
     retryCount?: number;
-    logger?: boolean;
+    logger?: boolean | Logger;
     webhookUrl?: string;
   };
 }

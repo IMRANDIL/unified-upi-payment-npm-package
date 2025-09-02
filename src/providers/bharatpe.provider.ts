@@ -1,5 +1,9 @@
 // src/providers/bharatpe.provider.ts
 
+import { ProviderError } from "../errors";
+import { CreateOrderParams, OrderResponse } from "../types";
+import { BaseProvider } from "./base.provider";
+
 export class BharatPeProvider extends BaseProvider {
   private baseUrl = 'https://api.bharatpe.com';
   
@@ -43,4 +47,6 @@ export class BharatPeProvider extends BaseProvider {
       throw new ProviderError(`BharatPe: ${error.message}`, 'bharatpe', error);
     }
   }
+
+  
 }
