@@ -1,42 +1,25 @@
-import * as crypto from 'crypto';
+import { createHash, createHmac } from 'crypto';
 
-export function generateSignature(data: string, secret: string, algorithm = 'sha256'): string {
-  return crypto
-    .createHmac(algorithm, secret)
-    .update(data)
-    .digest('hex');
-}
+export const sha256 = (data: string): string => {
+  return createHash('sha256').update(data).digest('hex');
+};
 
-export function generateSHA512(data: string): string {
-  return crypto
-    .createHash('sha512')
-    .update(data)
-    .digest('hex');
-}
+export const sha512 = (data: string): string => {
+  return createHash('sha512').update(data).digest('hex');
+};
 
-export function verifySignature(
-  data: string,
-  signature: string,
-  secret: string,
-  algorithm = 'sha256'
-): boolean {
-  const expectedSignature = generateSignature(data, secret, algorithm);
-  return crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(expectedSignature)
-  );
-}
+export const hmacSha256 = (data: string, secret: string): string => {
+  return createHmac('sha256', secret).update(data).digest('hex');
+};
 
-export function generateTransactionId(prefix = 'TXN'): string {
-  const timestamp = Date.now();
-  const random = crypto.randomBytes(4).toString('hex');
-  return `${prefix}_${timestamp}_${random}`;
-}
+export const hmacSha512 = (data: string, secret: string): string => {
+  return createHmac('sha512', secret).update(data).digest('hex');
+};
 
-export function encodeBase64(data: string): string {
+export const base64Encode = (data: string): string => {
   return Buffer.from(data).toString('base64');
-}
+};
 
-export function decodeBase64(data: string): string {
+export const base64Decode = (data: string): string => {
   return Buffer.from(data, 'base64').toString('utf-8');
-}
+};
