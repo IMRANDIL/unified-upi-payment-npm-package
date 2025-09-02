@@ -32,8 +32,16 @@
     "india",
     "payment-gateway"
   ],
-  "author": "Your Name",
+  "author": "Ali Imran Adil",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IMRANDIL/unified-upi-payment-npm-package.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IMRANDIL/unified-upi-payment-npm-package/issues"
+  },
+  "homepage": "https://github.com/IMRANDIL/unified-upi-payment-npm-package#readme",
   "dependencies": {
     "axios": "^1.6.0",
     "qrcode": "^1.5.3"
