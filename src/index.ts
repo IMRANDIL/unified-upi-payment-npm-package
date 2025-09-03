@@ -1,6 +1,6 @@
 // src/index.ts
 
-import { UPIConfig, CreateOrderParams, OrderResponse, ProviderName } from "./types";
+import { UPIConfig, CreateOrderParams, OrderResponse, ProviderName, TransactionStatus } from "./types";
 import { BaseProvider } from "./providers/base.provider";
 import { RazorpayProvider } from "./providers/razorpay.provider";
 import { CashfreeProvider } from "./providers/cashfree.provider";
@@ -93,4 +93,8 @@ export class UnifiedUPIPayment {
 
     return capabilities[this.config.provider] || [];
   }
+
+  async getTransactionStatus(orderId: string): Promise<TransactionStatus> {
+  return this.provider.getTransactionStatus(orderId);
+}
 }
