@@ -8,7 +8,7 @@
 
 ## ✅ Tested & Working Providers
 
-Based on real API testing (January 2025):
+Based on real API testing (August 2025):
 
 | Provider | Status | Test Results | Features |
 |----------|--------|--------------|----------|
