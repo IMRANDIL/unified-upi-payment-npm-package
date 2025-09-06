@@ -457,7 +457,7 @@ MIT © Ali Imran Adil
 ## 🆘 Support
 
 - 🐛 Issues: [GitHub Issues](https://github.com/IMRANDIL/unified-upi-payment-npm-package/issues)
-- 📧 Email: your-email@example.com
+- 📧 Email: aliimranadil2@gmail.com
 
 ---
 
